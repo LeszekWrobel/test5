@@ -5,11 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header "><h1>{{ __('Ogłoszenia') }}</h1>
-                     <div class="g-3 text-end">
-                    
-                           <a class="btn btn-primary " href="#" role="button">Dodaj ogłoszenie</a>
-                     </div>
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="col-8"><h1>{{ __('Ogłoszenia') }}</h1></div>
+                        <div class="col-4 mt-2 text-end">                     
+                           <a class="btn btn-primary" href="#" role="button">Dodaj ogłoszenie</a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card-body">
