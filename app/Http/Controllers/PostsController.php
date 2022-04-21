@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +20,7 @@ class PostsController extends Controller
      return view('welcome', compact('posts'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -26,7 +28,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        $posts = Post::all();
+        return view('create', compact('posts'));
     }
 
     /**
@@ -37,7 +40,22 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+           $attributes =  request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => 'required',
+            //'image' => ['image','nullable','max:1999']
+           // 'image' => 'image|nullable|max:1999'
+        ]);
+         $post = new Post;
+        $post->title = request('title');
+        $post->description = request('description');
+      //  $post->image = request('image');
+        $post->user_id = 1;//Autch()->id;
+       $post->save();
+      //   $attributes['user_id'] = auth()->id();
+      //Post::create($attributes);
+
+       return redirect('/posts');
     }
 
     /**

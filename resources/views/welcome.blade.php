@@ -7,9 +7,10 @@
             <div class="card">
                 <div class="card-header ">
                     <div class="row">
+                          @include ('inc/messages')
                         <div class="col-8"><h1>{{ __('Ogłoszenia') }}</h1></div>
                         <div class="col-4 mt-2 text-end">                     
-                           <a class="btn btn-primary" href="#" role="button">Dodaj ogłoszenie</a>
+                           <a class="btn btn-primary" href="posts/create" role="button">Dodaj ogłoszenie</a>
                         </div>
                     </div>
                 </div>

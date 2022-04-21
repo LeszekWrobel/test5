@@ -19,8 +19,12 @@ Route::get('/', function () {
 });
 */
 Route::get('/', [App\Http\Controllers\PostsController::class, 'index'])->name('index');
+Route::get('/posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('create');
+Route::get('/posts', [App\Http\Controllers\PostsController::class, 'store']);
+
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/', [App\Http\Controllers\PostsController::class, 'index']);//->name('home');
+Route::resource('/posts', 'App\Http\Controllers\PostsController');
