@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
+
+
+
 class PostsController extends Controller
 {
     
@@ -17,6 +20,7 @@ class PostsController extends Controller
     {
       // return('PostContr');
       $posts = Post::all();
+       $posts = Post::paginate(3);
      return view('welcome', compact('posts'));
     }
 
@@ -46,16 +50,18 @@ class PostsController extends Controller
             //'image' => ['image','nullable','max:1999']
            // 'image' => 'image|nullable|max:1999'
         ]);
+        //$auth_id = Users::users()->id;
          $post = new Post;
         $post->title = request('title');
         $post->description = request('description');
       //  $post->image = request('image');
-        $post->user_id = 1;//Autch()->id;
+        $post->user_id = $auth_id;// Auth::user()->id;//$auth_id;//users()->id();//Auth::users()->id();
        $post->save();
       //   $attributes['user_id'] = auth()->id();
       //Post::create($attributes);
 
-       return redirect('/posts');
+       return redirect('/posts')->with('message', 'Your data updated successfully');
+;
     }
 
     /**

@@ -7,7 +7,15 @@
             <div class="card">
                 <div class="card-header ">
                     <div class="row">
+
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                           @include ('inc/messages')
+                         
+
                         <div class="col-8"><h1>{{ __('Ogłoszenia') }}</h1></div>
                         <div class="col-4 mt-2 text-end">                     
                            <a class="btn btn-primary" href="posts/create" role="button">Dodaj ogłoszenie</a>
@@ -40,7 +48,7 @@
 
                         <nav aria-label="Page navigation example">
                           <ul class="pagination justify-content-center">                         
-                                
+                                {{ $posts->links() }}
                           </ul>
                         </nav>      
                 </div>
