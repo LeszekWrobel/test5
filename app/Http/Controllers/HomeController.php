@@ -35,7 +35,7 @@ class HomeController extends Controller
      $posts = Post::all();
       //$posts = Post::paginate(3);
      
-       $posts = Post::where('user_id', auth()->user()->id)->paginate(3);
+       $posts = Post::latest()->where('user_id', auth()->user()->id)->paginate(3);
      //$posts = Post::latest()->limit(5)->get();
       return view('welcome', compact('posts'));
     }
