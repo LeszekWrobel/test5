@@ -56,7 +56,7 @@
                                 
                                 <p class="card-text"><small class="text-muted">Dodano : {{$post->updated_at}} <br/>
                                 Ostatnia aktualizacja : {{$post->created_at}}</small></p>
-                                <a href="posts/{{$post->id}}" class="btn btn-outline-dark btn-sm shadow p-1 mb-5 bg-body rounded ">Zobacz szczegóły</a>
+                                <a href="posts/{{$post->id}}" class="btn btn-outline-dark btn-sm shadow p-1 mb-6  ">Zobacz szczegóły</a>
                               </div>
                             </div>
                           </div>
