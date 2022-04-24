@@ -15,12 +15,12 @@ class HomeController extends Controller
      * Create a new controller instance.
      *
      * @return void
-     */
+    
     public function __construct()
     {
         $this->middleware('auth');
     }
-
+ */
     /**
      * Show the application dashboard.
      *
@@ -30,6 +30,8 @@ class HomeController extends Controller
     {
        // dd(Auth::id());
       // return('HomeController');
+       if (! auth()->check()) {return redirect()->route('login')->withErrors(['Musisz być zalogowany']);}
+
      $posts = Post::all();
       //$posts = Post::paginate(3);
      

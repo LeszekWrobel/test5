@@ -16,22 +16,28 @@
                         </div>
                     @endif
 
-                     @if (request()->routeIs('index'))
-                        <div class="alert alert-success" role="alert">
-                         <a href="{{ route('home') }}">
-                           {{ $foo }}
+                    @include ('inc/messages')
+
+                    @if (request()->routeIs('index'))
+                        <div class="col-8"><h1>{{ __('Ogłoszenia') }}</h1></div>
+                        <div class="col-4 mt-2 text-end">   
+                            <a href="{{ route('home') }}" class="btn btn-outline-dark" role="button">
+                             {{ $foo }}
                             </a>
+                        </div>
+
+                    @else
+                        <div class="col-8"><h1>{{ __('Twoje Ogłoszenia') }}</h1></div>
+                        <div class="col-4 mt-2 text-end">                     
+                           <a class="btn btn-outline-dark" href="{{ route('posts.create') }}" role="button">Dodaj ogłoszenie</a>
                         </div>
                     @endif
                    
 
-                    @include ('inc/messages')
+                   
                          
                      
-                        <div class="col-8"><h1>{{ __('Ogłoszenia') }}</h1></div>
-                        <div class="col-4 mt-2 text-end">                     
-                           <a class="btn btn-primary" href="{{ route('posts.create') }}" role="button">Dodaj ogłoszenie</a>
-                        </div>
+                        
                     </div>
                 </div>
 

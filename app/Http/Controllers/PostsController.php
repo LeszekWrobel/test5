@@ -32,7 +32,11 @@ class PostsController extends Controller
      return view('welcome', compact('posts') , ['foo'=>'Twoje ogłoszenia']);
      
     }
-
+/*
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -41,6 +45,8 @@ class PostsController extends Controller
      */
     public function create()
     {
+        if (! auth()->check()) {return redirect()->route('login')->withErrors(['Musisz być zalogowany']);}
+
         $posts = Post::all();
         return view('create', compact('posts'));
     }
