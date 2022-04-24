@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 */
 Route::get('/', [App\Http\Controllers\PostsController::class, 'index'])->name('index');
-Route::get('/posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('create');
+Route::get('/posts/create', [App\Http\Controllers\PostsController::class, 'create'])->name('posts.create');
 Route::get('/posts', [App\Http\Controllers\PostsController::class, 'store']);
 
 

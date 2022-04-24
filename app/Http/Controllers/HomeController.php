@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class HomeController extends Controller
 {
@@ -24,8 +28,13 @@ class HomeController extends Controller
      */
      public function index()
     {
+       // dd(Auth::id());
       // return('HomeController');
      $posts = Post::all();
-     return view('welcome', compact('posts'));
+      //$posts = Post::paginate(3);
+     
+       $posts = Post::where('user_id', auth()->user()->id)->paginate(3);
+     //$posts = Post::latest()->limit(5)->get();
+      return view('welcome', compact('posts'));
     }
 }
