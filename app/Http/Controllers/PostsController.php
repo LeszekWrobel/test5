@@ -99,7 +99,8 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+       // $post = new Post::all();
+       return view('posts/edit', compact('post'));
     }
 
     /**
@@ -110,8 +111,17 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
-    {
-        //
+    {/*
+        $post = Post::find();
+        $post->title = request('title');
+        $post->description = request('description');
+        $post->image = request('image');
+        $post->user_id = auth()->user()->id;;
+        $post->save();
+*/
+     
+     $post->update(request(['title','description','image']));
+        return redirect('/posts')->withErrors('message', 'Your updated successfully');;
     }
 
     /**
