@@ -72,7 +72,7 @@ class PostsController extends Controller
       //  $post->image = request('image');
         $post->user_id = auth()->user()->id;
         $post->save();
-        return redirect()->action([HomeController::class, 'index'])->with('status', 'Your post created successfully !');
+        return redirect()->action([HomeController::class, 'index'])->with('status', 'Your post  "'.($post->title).'" created successfully !');
         //return redirect('/posts')->with('status', 'Your data updated successfully');
 ;
     }
@@ -120,7 +120,7 @@ class PostsController extends Controller
      $post->update(request(['title','description','image']));
       // return redirect('/posts')->with('status', 'Post updated!'); // works for status
       //  return redirect()->route('posts.index')->withErrors(['Your updated successfully']); // work for errors
-      return redirect()->action([HomeController::class, 'index'])->with('status', 'Post updated successfully !');
+      return redirect()->action([HomeController::class, 'index'])->with('status', 'Post "'.($post->title).'" updated successfully !');
   
     }
 
@@ -133,6 +133,6 @@ class PostsController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->action([HomeController::class, 'index'])->with('status','Post deleted successfully !');
+        return redirect()->action([HomeController::class, 'index'])->with('status','Post "'.($post->title).'" deleted successfully !');
     }
 }

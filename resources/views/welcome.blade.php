@@ -8,37 +8,30 @@
                 <div class="card-header ">
                     <div class="row">
 
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
                        
-                            {{ session('status') }}
+                                {{ session('status') }}
                        
-                        </div>
-                    @endif
+                            </div>
+                        @endif
 
-                    @include ('inc/messages')
+                        @include ('inc/messages')
                     
-                    
-                    @if (request()->routeIs('index'))
-                        <div class="col-8"><h1>{{ __('Ogłoszenia') }}</h1></div>
-                        <div class="col-4 mt-2 text-end">   
-                            <a href="{{ route('home') }}" class="btn btn-outline-dark" role="button">
-                             {{ $foo }}
-                            </a>
-                        </div>
+                        @if (request()->routeIs('index'))
+                            <div class="col-8"><h1>{{ __('Ogłoszenia') }}</h1></div>
+                            <div class="col-4 mt-2 text-end">   
+                                <a href="{{ route('home') }}" class="btn btn-outline-dark" role="button">
+                                 {{ $foo }}
+                                </a>
+                            </div>
 
-                    @else
-                        <div class="col-8"><h1>{{ __('Twoje Ogłoszenia') }}</h1></div>
-                        <div class="col-4 mt-2 text-end">                     
-                           <a class="btn btn-outline-dark" href="{{ route('posts.create') }}" role="button">Dodaj ogłoszenie</a>
-                        </div>
-                    @endif
-                   
-
-                   
-                         
-                     
-                        
+                        @else
+                            <div class="col-8"><h1>{{ __('Twoje Ogłoszenia') }}</h1></div>
+                            <div class="col-4 mt-2 text-end">                     
+                               <a class="btn btn-outline-dark" href="{{ route('posts.create') }}" role="button">Dodaj ogłoszenie</a>
+                            </div>
+                        @endif   
                     </div>
                 </div>
 
@@ -55,8 +48,8 @@
                               <div class="card-body">
                                 <h3 class="card-title">{{$post->title}}</h3>
                                 
-                                <p class="card-text"><small class="text-muted">Dodano : {{$post->updated_at}} <br/>
-                                Ostatnia aktualizacja : {{$post->created_at}}</small></p>
+                                <p class="card-text"><small class="text-muted">Dodano : {{$post->created_at}}<br/>
+                                Ostatnia aktualizacja : {{$post->updated_at}}</small></p>
                                 <a href="posts/{{$post->id}}" class="btn btn-outline-dark btn-sm shadow p-1 mb-6  ">Zobacz szczegóły</a>
                               </div>
                             </div>

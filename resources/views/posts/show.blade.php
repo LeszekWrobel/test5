@@ -7,29 +7,21 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">               
-                        <div class="col-8"><h1>Ogłoszenie {{$post->id}}</h1></div>
+                        <div class="col-7"><h1>Ogłoszenie {{$post->id}}</h1></div>
 
                         @if(!Auth::guest())
                             @if(Auth::user()->id == $post->user_id)
-                                <div class="col-4 mt-2 text-end">
-                                    <a class="btn btn-danger " href="{{route('posts.destroy',$post->id)}}" >Usuń</a>
-
-                                     <form method="POST" action="{{route('posts.destroy',$post->id)}}">
-<!--
-    {{method_field('DELETE')}}
-    {{csrf_field()}}
--->
-    @method('DELETE')
-    @csrf
-     <div class="field" >
-      <div class="control" >
-        <button type="submit" class="button" >Delete</button>
-      </div>
-     </div>
-    </form>
-
-                                    <a class="btn btn-primary " href="{{ $post->id }}/edit" >Edytuj</a>
+                                <div class="col-2 my-2 text-end">
+                                    <a class="btn btn-primary " href="{{ $post->id }}/edit" >Edit</a>
                                 </div>
+                                <div class="col-2 mt-2 ">
+                                     <form method="POST" action="{{route('posts.destroy',$post->id)}}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger" >Delete</button>
+                                     </form>
+                                </div>
+                                
                             @endif
                         @endif
                     </div>
@@ -45,8 +37,8 @@
                                 
                                 <p class="card-text">{{$post->description}}</p>
                                      <div class="card-body">
-                                         <p class="card-text"><small class="text-muted">Dodano : {{$post->updated_at}} <br/>
-                                         Ostatnia aktualizacja : {{$post->created_at}}</small></p>
+                                         <p class="card-text"><small class="text-muted"> Ostatnia aktualizacja : {{$post->created_at}} <br/>
+                                         Dodano : {{$post->updated_at}}</small></p>
                                        
                                          <a href="{{ route('index') }}" class="btn btn-outline-dark btn-sm shadow p-1 mb-5">Wróć do       ogłoszeń
                                          </a>
