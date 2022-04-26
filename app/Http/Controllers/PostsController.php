@@ -70,13 +70,10 @@ class PostsController extends Controller
         $post->title = request('title');
         $post->description = request('description');
       //  $post->image = request('image');
-     //  dd(auth()->user()->id);
         $post->user_id = auth()->user()->id;
-       $post->save();
-      //   $attributes['user_id'] = auth()->id();
-      //Post::create($attributes);
-
-       return redirect('/posts')->with('message', 'Your data updated successfully');
+        $post->save();
+        return redirect()->action([HomeController::class, 'index'])->with('status', 'Your post created successfully !');
+        //return redirect('/posts')->with('status', 'Your data updated successfully');
 ;
     }
 
@@ -121,7 +118,10 @@ class PostsController extends Controller
 */
      
      $post->update(request(['title','description','image']));
-        return redirect('/posts')->withErrors('message', 'Your updated successfully');;
+      // return redirect('/posts')->with('status', 'Post updated!'); // works for status
+      //  return redirect()->route('posts.index')->withErrors(['Your updated successfully']); // work for errors
+      return redirect()->action([HomeController::class, 'index'])->with('status', 'Post updated successfully !');
+  
     }
 
     /**
