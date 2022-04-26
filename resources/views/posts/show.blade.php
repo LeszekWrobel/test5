@@ -11,7 +11,23 @@
 
                         @if(!Auth::guest())
                             @if(Auth::user()->id == $post->user_id)
-                                <div class="col-4 mt-2 text-end">   
+                                <div class="col-4 mt-2 text-end">
+                                    <a class="btn btn-danger " href="{{route('posts.destroy',$post->id)}}" >Usuń</a>
+
+                                     <form method="POST" action="{{route('posts.destroy',$post->id)}}">
+<!--
+    {{method_field('DELETE')}}
+    {{csrf_field()}}
+-->
+    @method('DELETE')
+    @csrf
+     <div class="field" >
+      <div class="control" >
+        <button type="submit" class="button" >Delete</button>
+      </div>
+     </div>
+    </form>
+
                                     <a class="btn btn-primary " href="{{ $post->id }}/edit" >Edytuj</a>
                                 </div>
                             @endif

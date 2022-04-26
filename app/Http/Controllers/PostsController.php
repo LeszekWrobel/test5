@@ -132,6 +132,7 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->action([HomeController::class, 'index'])->with('status','Post deleted successfully !');
     }
 }
