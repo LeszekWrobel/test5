@@ -61,7 +61,7 @@ class PostsController extends Controller
     {
            $attributes =  request()->validate([
             'title' => ['required', 'min:3'],
-            'description' => 'required',
+            'description' => ['required', 'min:3'],
             //'image' => ['image','nullable','max:1999']
            // 'image' => 'image|nullable|max:1999'
         ]);
