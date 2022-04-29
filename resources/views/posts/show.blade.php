@@ -32,8 +32,8 @@
                             <img src="{{$post->image}}" class="img-fluid" alt="...">
                         </div>
                         <div class="col-md-8">
-                            <div class="card-body">
-                                <h3 class="card-title">{{$post->title}}</h3>
+                            <div class="card-body mt-3">
+                                <h3 class="card-title my-4">{{$post->title}}</h3>
                                 
                                 <p class="card-text">{{$post->description}}</p>
                                      <div class="card-body">
@@ -51,7 +51,4 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection

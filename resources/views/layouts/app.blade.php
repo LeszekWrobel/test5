@@ -78,6 +78,14 @@
         <main class="py-4">
         <div class="container">
 
+        @if (auth()->check() && auth()->user()->is_admin)
+            <div class="alert alert-info text-center" role="alert">
+                       
+                widok administratora
+                       
+            </div>
+        @endif
+
         @yield('content')
         
         </div>

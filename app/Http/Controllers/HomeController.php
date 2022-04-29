@@ -31,11 +31,14 @@ class HomeController extends Controller
        // dd(Auth::id());
       // return('HomeController');
        if (! auth()->check()) {return redirect()->route('login')->withErrors(['Musisz być zalogowany']);}
+      // if (auth()->check()) {$is_admin = auth()->user()->is_admin;}
 
      $posts = Post::all();
       //$posts = Post::paginate(3);
-     
+   //  if(auth()->check() && auth()->user()->is_admin == 1) {$posts = Post::latest()->paginate(3);
+   //  } else {
        $posts = Post::latest()->where('user_id', auth()->user()->id)->paginate(3);
+   //  }
      //$posts = Post::latest()->limit(5)->get();
       return view('welcome', compact('posts'));
     }

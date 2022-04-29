@@ -8,6 +8,8 @@
                 <div class="card-header ">
                     <div class="row">
 
+                         
+
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                        
@@ -46,11 +48,30 @@
                             </div>
                             <div class="col-md-8">
                               <div class="card-body">
+
                                 <h3 class="card-title">{{$post->title}}</h3>
                                 
                                 <p class="card-text"><small class="text-muted">Dodano : {{$post->created_at}}<br/>
                                 Ostatnia aktualizacja : {{$post->updated_at}}</small></p>
-                                <a href="posts/{{$post->id}}" class="btn btn-outline-dark btn-sm shadow p-1 mb-6  ">Zobacz szczegóły</a>
+
+                                     <div class="row">
+                                        <div class="col-6 my-2">
+                                             <a href="posts/{{$post->id}}" class="btn btn-outline-dark btn-sm shadow p-1 mb-6  ">Zobacz szczegóły</a>
+                                        </div>
+                                         @if(auth()->check() && auth()->user()->is_admin == 1)
+                                        <div class="col-3 my-2 text-end">
+                                            <a class="btn btn-primary " href="posts/{{ $post->id }}/edit" >Edit</a>
+                                        </div>
+                                        <div class="col-3 mt-2 ">
+                                             <form method="POST" action="{{route('posts.destroy',$post->id)}}">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger" >Delete</button>
+                                             </form>
+                                        </div>
+                                         @endif
+                                     </div>
+                                
                               </div>
                             </div>
                           </div>

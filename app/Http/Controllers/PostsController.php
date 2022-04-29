@@ -23,13 +23,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        
-      // return('PostContr');
-      $posts = Post::all();
+       $posts = Post::all();
        $posts = Post::latest()->paginate(3);
-     // $posts = Post::where('id', Auth::user()->id)->paginate(10);
-    // return view('welcome', compact('posts')); //   , 'foo'=>'Twoje ogłoszenie',
-     return view('welcome', compact('posts') , ['foo'=>'Twoje ogłoszenia']);
+       return view('welcome', compact('posts') , ['foo'=>'Twoje ogłoszenia']);
      
     }
 /*
@@ -62,6 +58,7 @@ class PostsController extends Controller
            $attributes =  request()->validate([
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
+           
             //'image' => ['image','nullable','max:1999']
            // 'image' => 'image|nullable|max:1999'
         ]);
@@ -73,7 +70,6 @@ class PostsController extends Controller
         $post->user_id = auth()->user()->id;
         $post->save();
         return redirect()->action([HomeController::class, 'index'])->with('status', 'Your post  "'.($post->title).'" created successfully !');
-        //return redirect('/posts')->with('status', 'Your data updated successfully');
 ;
     }
 
