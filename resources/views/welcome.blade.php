@@ -63,7 +63,9 @@
                                             <a class="btn btn-primary " href="posts/{{ $post->id }}/edit" >Edit</a>
                                         </div>
                                         <div class="col-3 mt-2 ">
-                                             <form method="POST" action="{{route('posts.destroy',$post->id)}}">
+                                            <!-- <form method="POST" action="{{route('posts.destroy',$post->id)}}"> -->
+                                             <form onclick="return confirm('Chcesz usunąć post ?')" action="{{route('posts.destroy',$post->id)}}" method="POST">
+        
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger" >Delete</button>
@@ -89,5 +91,5 @@
         </div>
     </div>
 </div>
-                            
+
 @endsection

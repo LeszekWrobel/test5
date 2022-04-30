@@ -45,10 +45,16 @@
                             </div>
 
                             <div class="form-group row g-3">
-                                <label form="image">Dodaj zdjęcie</label>
-                                <input type="file" id="image" name="image">
-                            </div>
+                                <label form="image_path">Dodaj zdjęcie</label>
+                                <input id="image_path" type="file"
+                                class="form-control{{ $errors->has('image_path') ? ' is-invalid' : ''}}" name="image_path">
 
+                                @if ($errors->has('image_path'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('image_path') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                             <div class="g-3">
                                 <button class="btn btn-primary" type="submmit">Dodaj</button>
                             </div>

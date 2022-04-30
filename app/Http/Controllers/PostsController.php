@@ -59,14 +59,14 @@ class PostsController extends Controller
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
            
-            //'image' => ['image','nullable','max:1999']
+            'image_path' => ['required','max:1999']
            // 'image' => 'image|nullable|max:1999'
         ]);
        
          $post = new Post;
         $post->title = request('title');
         $post->description = request('description');
-      //  $post->image = request('image');
+        $post->image_path = request('image_path');
         $post->user_id = auth()->user()->id;
         $post->save();
         return redirect()->action([HomeController::class, 'index'])->with('status', 'Your post  "'.($post->title).'" created successfully !');
@@ -112,8 +112,13 @@ class PostsController extends Controller
         $post->user_id = auth()->user()->id;;
         $post->save();
 */
-     
-     $post->update(request(['title','description','image']));
+       $attributes =  request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'min:3'],
+           
+         //   'image_path' => ['required','max:1999']
+             ]);
+     $post->update(request(['title','description','image_path']));
       // return redirect('/posts')->with('status', 'Post updated!'); // works for status
       //  return redirect()->route('posts.index')->withErrors(['Your updated successfully']); // work for errors
       return redirect()->action([HomeController::class, 'index'])->with('status', 'Post "'.($post->title).'" updated successfully !');

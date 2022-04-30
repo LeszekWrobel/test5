@@ -43,12 +43,12 @@
                                     </span>
                                 @endif
                             </div>
-
+                            <!--
                             <div class="form-group row g-3">
                                 <label form="image">Dodaj zdjęcie</label>
                                 <input type="file" id="image" name="image">
                             </div>
-
+                            -->
                             <div class="g-3">
                                 <button class="btn btn-primary" type="submmit">Zapisz zmiany</button>
                             </div>

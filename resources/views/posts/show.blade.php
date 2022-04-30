@@ -18,7 +18,7 @@
                                      <form method="POST" action="{{route('posts.destroy',$post->id)}}">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger" >Delete</button>
+                                            <button type="submit" onclick="return confirm('Chcesz usunąć post ?')" class="btn btn-danger" >Delete</button>
                                      </form>
                                 </div>
                                 
