@@ -43,8 +43,9 @@
 
                         <div class="card mb-3" style="">
                           <div class="row g-0">
-                            <div class="col-md-4">
-                               <img src="{{$post->image}}" class="img-thumbnail w-50" alt="...">
+                            <div class="col-md-4 my-3">
+                           <!--    <img src="{{$post->image}}" class="img-thumbnail w-50" alt="..."> -->
+                                <img src="{{asset('images_path/'.$post->image_path)}}" class="img-thumbnail w-100" alt="...">
                             </div>
                             <div class="col-md-8">
                               <div class="card-body">

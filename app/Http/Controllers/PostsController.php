@@ -55,20 +55,29 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+       
            $attributes =  request()->validate([
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
            
-            'image_path' => ['required','max:1999']
+            'image_path' => ['required','mimes:jpg,png,jpeg','max:5048']
            // 'image' => 'image|nullable|max:1999'
         ]);
        
-         $post = new Post;
+
+        $post = new Post;
         $post->title = request('title');
         $post->description = request('description');
-        $post->image_path = request('image_path');
-        $post->user_id = auth()->user()->id;
+        //$post->image_path = request('image_path');
+        $post->user_id = request('user_id');//$post->user_id = auth()->user()->id; // moved to view
+
+        $newImageName = request('user_id').'-'.time().'-'.request('image_path')->getClientOriginalName();//.'.'.request('image_path')->guessExtension();
+        $post->image_path = $newImageName;
+        $test = $request->image_path->move(public_path('images_path'), $newImageName);
+        //dd($test);
+        // dd(($post->image_path));
         $post->save();
+       
         return redirect()->action([HomeController::class, 'index'])->with('status', 'Your post  "'.($post->title).'" created successfully !');
 ;
     }
