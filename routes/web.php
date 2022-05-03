@@ -28,3 +28,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/', [App\Http\Controllers\PostsController::class, 'index']);//->name('home');
 Route::resource('/posts', 'App\Http\Controllers\PostsController')->names('posts');
+Route::resource('/image', 'App\Http\Controllers\ImageUploadController')->names('image');
+

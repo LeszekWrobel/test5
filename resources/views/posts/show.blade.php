@@ -16,7 +16,7 @@
                                                              
                               
                                 <div class="col-3 my-2 text-end">
-                                    <a class="btn btn-outline-dark " href="{{ $post->id }}/edit" >Add images</a>
+                                    <a class="btn btn-outline-dark " href="{{ route('image.create') }}?post_id={{$post->id}}" >Add images</a>
                                 </div>
                                 <div class="col-2 my-2 text-center ">
                                     <a class="btn btn-outline-primary" href="{{ $post->id }}/edit" >Edit</a>
@@ -34,12 +34,12 @@
                     </div>
                 </div>
                 <div class="card mb-3" style="">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="{{$post->image}}" class="img-fluid" alt="...">
+                   
+                        <div class="col-md-12 ">
+                            <img src="{{asset('images_path/'.$post->image_path)}}" class="img-fluid" alt="...">
                         </div>
                         <div class="col-md-8">
-                            <div class="card-body mt-3">
+                            <div class="card-body">
                                 <h3 class="card-title my-4">{{$post->title}}</h3>
                                 
                                 <p class="card-text">{{$post->description}}</p>
@@ -52,7 +52,7 @@
                                     </div>
                             </div>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

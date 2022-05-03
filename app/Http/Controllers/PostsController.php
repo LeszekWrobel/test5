@@ -73,7 +73,7 @@ class PostsController extends Controller
 
         $newImageName = request('user_id').'-'.time().'-'.request('image_path')->getClientOriginalName();//.'.'.request('image_path')->guessExtension();
         $post->image_path = $newImageName;
-        $test = $request->image_path->move(public_path('images_path'), $newImageName);
+        $request->image_path->move(public_path('images_path'), $newImageName);
         //dd($test);
         // dd(($post->image_path));
         $post->save();
