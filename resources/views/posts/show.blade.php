@@ -36,7 +36,9 @@
                 <div class="card mb-3" style="">
                    
                         <div class="col-md-12 ">
-                            <img src="{{asset('images_path/'.$post->image_path)}}" class="img-fluid" alt="...">
+                            <img src="{{asset('images_path/'.$post->id.'/'.$post->image_path)}}" class="img-fluid" alt="...">
+                        
+                           <img src="{{asset('images_path/'.$post->id.'/'.'.$filename')}}" class="img-fluid" alt="...">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">

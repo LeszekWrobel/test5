@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+ use File;
 
 
 class PostsController extends Controller
@@ -90,6 +91,24 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
+      //  use File;
+
+//$files = File::files(public_path()); //
+
+//$files = File::files(public_path('images_path/'.$post_id));
+
+// If you would like to retrieve a list of 
+// all files within a given directory including all sub-directories
+/*
+$post_id = $post->id;
+$files = File::allFiles(public_path('images_path/'.$post_id));
+foreach($files as $file)
+{
+ $filename = $file->filename;
+}
+dd($files->filename);
+*/
+
         return view('posts.show',compact('post'));
     }
 

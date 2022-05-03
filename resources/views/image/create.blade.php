@@ -30,7 +30,7 @@
 
                                 <form class="row m-3" method="POST" action="/image" enctype="multipart/form-data">
                                 {{csrf_field()}}
-
+                                    <input type="hidden" name="post_id" value="{{$post_id}}">
                                     <div class="mb-3">
                                           <label form="image_path" class="form-label">Multiple files input example</label>
                                           <input

@@ -59,29 +59,36 @@ class ImageUploadController extends Controller
     return view("viewdeatil/school_id=$school_id", compact('school_id'));
 }
 */
+        $data = [];
         if ($request->hasFile('image_path'))
         {
           $image_path = $request->file('image_path');
-          foreach ($image_path as $files)
+          foreach ($image_path as $file)
           {
              //$posts = Post::all();
               $post_id = $request->get('post_id');
-              $destinationPath = public_path('images_path');
+              $destinationPath = public_path('images_path/'.$post_id);
               $user_id = auth()->user()->id;
-              $file_name = $user_id.'-'.time().'-'.$files->getClientOriginalName();
-              $files->move($destinationPath, $file_name);
+              $file_name = $user_id.'-'.$post_id.'-'.time().'-'.$file->getClientOriginalName();
+              $file->move($destinationPath, $file_name);
               $data[] = $file_name;
              ;
           }
       }
-      //dd($data  );
-      $file= new Post();
-      $file->name=json_encode($data);
-      //dd( $file->name);
-      $file->name->save();
-
-       return back()->withSuccess('Great! Image has been successfully uploaded.');
+         // dd($file_name);
+         /*
+        $file= new File();
+        $file->filename=json_encode($data);
+        $file->save();
+         return back()->with('success', 'Your files has been successfully added');
        // return redirect()->action([PostController::class, 'index'])->with('status', 'Your post  "'.($post->title).'" created successfully !');
+       
+        $file= new Post();
+        $file->filename=json_encode($data);
+        // dd(json_encode($data));
+        $file->save();
+*/
+         return back()->with('success', 'Your files has been successfully added');
     }
 
     /**
