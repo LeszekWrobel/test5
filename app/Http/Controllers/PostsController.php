@@ -94,22 +94,30 @@ class PostsController extends Controller
       //  use File;
 
 //$files = File::files(public_path()); //
+$post_id = $post->id;
 
 //$files = File::files(public_path('images_path/'.$post_id));
 
 // If you would like to retrieve a list of 
 // all files within a given directory including all sub-directories
-/*
-$post_id = $post->id;
+$filename = public_path('images_path/'.$post_id);
+if (is_dir($filename)) { 
 $files = File::allFiles(public_path('images_path/'.$post_id));
+}else{ $files = null;}
+//if (file_exists($files)) { dd('jest folder');} else {dd('brak folderu');}
+
+//$files = File::findOrFail(Files(public_path('images_path/'.$post_id)));
+
+//dd($files->filename);
+/*
 foreach($files as $file)
 {
- $filename = $file->filename;
-}
-dd($files->filename);
-*/
+ //$file_name = $file()->filename;
 
-        return view('posts.show',compact('post'));
+dd($file->getFilename());
+}*/
+//dd($files);
+        return view('posts.show',compact('post','files','filename'));
     }
 
     /**

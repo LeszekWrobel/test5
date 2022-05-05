@@ -75,7 +75,7 @@ class ImageUploadController extends Controller
              ;
           }
       }
-         // dd($file_name);
+          //dd($data);
          /*
         $file= new File();
         $file->filename=json_encode($data);
@@ -122,7 +122,12 @@ class ImageUploadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $file_name = $request->get('file_name');
+        //dd('destroy');
+        unlink('images_path/'.$id.'/'.$file_name);
+       
+         return back()->with('success', 'Your immage has been successfully deleted');
+        //  return redirect()->action([HomeController::class, 'index'])->with('status','Post "'.($post->title).'" deleted successfully !');
     }
 
     /**
@@ -133,6 +138,6 @@ class ImageUploadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
