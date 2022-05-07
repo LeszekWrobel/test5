@@ -6,7 +6,10 @@
         <div class="col-md-8">
             <div class="card">
                         <div class="card-header">
-                            <div class="row" >
+
+                        @include ('inc/messages')
+
+                           <div class="row" >
 
                                 <div class="col-5"><h1>Ogłoszenie {{$post->id}}</h1></div>
 
@@ -18,7 +21,7 @@
                                         <div class="col-3 my-2 text-end">
                                             <a class="btn btn-outline-dark " href="{{ route('image.create') }}?post_id={{$post->id}}" >Add images</a>
                                         </div>
-                                        <div class="col-2 my-2 text-center ">
+                                        <div class="d-grid col-2 my-2 text-center ">
                                             <a class="btn btn-outline-primary" href="{{ $post->id }}/edit" >Edit</a>
                                         </div>
                                         <div class="col-2 mt-2 ">
@@ -36,17 +39,25 @@
                         <div class="card mb-3" style="">
                    
                             <div class="col-md-12 ">
-                                <img src="{{asset('images_path/'.$post->id.'/'.$post->image_path)}}" class="img-fluid" alt="...">
+                                <img src="{{asset('images_path/'.$post->image_path)}}" class="img-fluid" alt="...">
                                 @if (is_dir($filename)) 
                                     @foreach($files as $file)
                            
                                         <img src="{{asset('images_path/'.$post->id.'/'.$file->getFilename())}}" class="img-fluid mt-3" alt="">
                                         <div class="col-2 my-2 text-center ">
+
+                                        @if(!Auth::guest())
+                                            @if(Auth::user()->id == $post->user_id)
                                                 <form method="POST" action="{{route('image.update',$post->id)}}?file_name={{$file->getFilename()}}">
                                                     @method('PATCH')
                                                     @csrf
-                                                    <button type="submit" onclick="return confirm('Chcesz usunąć zdjęcie ?')" class="btn btn-outline-danger">Delete</button>
+                                                    <button type="submit"
+                                                            onclick="return confirm('Chcesz usunąć post ?')"
+                                                            class="btn btn-outline-danger">Delete image
+                                                    </button>
                                                 </form>
+                                            @endif
+                                        @endif
                                         </div>
                           
                                     @endforeach

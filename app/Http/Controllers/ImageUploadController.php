@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 
 use App\Models\User;
+use App\Http\Controllers\PostsController;
 
 class ImageUploadController extends Controller
 {
@@ -29,7 +30,6 @@ class ImageUploadController extends Controller
          // url:/viewdeail?post_id=2
         $post_id = request()->get('post_id');
         return view('image.create', compact('post_id'));
-        //return view('image.create');
     }
 
     /**
@@ -39,11 +39,11 @@ class ImageUploadController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {/*
+    {
          $attributes =  request()->validate([
-            'image_path' => ['required','mimes:jpg,png,jpeg']
+            'image_path' => ['required']
         ]);
-
+/*,'mimes:jpg,png,jpeg'
         $images = new Images::
         if ($request->image_name)
         $newImageName = request('user_id').'-'.time().'-'.request('image_path')->getClientOriginalName();
@@ -58,14 +58,14 @@ class ImageUploadController extends Controller
 
     return view("viewdeatil/school_id=$school_id", compact('school_id'));
 }
-*/
+*/     
         $data = [];
         if ($request->hasFile('image_path'))
         {
           $image_path = $request->file('image_path');
           foreach ($image_path as $file)
           {
-             //$posts = Post::all();
+            //$posts = Post::all();
               $post_id = $request->get('post_id');
               $destinationPath = public_path('images_path/'.$post_id);
               $user_id = auth()->user()->id;
@@ -75,20 +75,11 @@ class ImageUploadController extends Controller
              ;
           }
       }
-          //dd($data);
+         // dd($post);
          /*
-        $file= new File();
-        $file->filename=json_encode($data);
-        $file->save();
-         return back()->with('success', 'Your files has been successfully added');
-       // return redirect()->action([PostController::class, 'index'])->with('status', 'Your post  "'.($post->title).'" created successfully !');
-       
-        $file= new Post();
-        $file->filename=json_encode($data);
-        // dd(json_encode($data));
-        $file->save();
-*/
-         return back()->with('success', 'Your files has been successfully added');
+*/      $post = $request->get('post_id');
+         return redirect()->route('posts.show', ['post' => $post])->with('status', 'Images added successfully !');
+         
     }
 
     /**
@@ -126,7 +117,7 @@ class ImageUploadController extends Controller
         //dd('destroy');
         unlink('images_path/'.$id.'/'.$file_name);
        
-         return back()->with('success', 'Your immage has been successfully deleted');
+         return back()->with('status', 'Your immage has been  deleted successfully !');
         //  return redirect()->action([HomeController::class, 'index'])->with('status','Post "'.($post->title).'" deleted successfully !');
     }
 

@@ -71,14 +71,11 @@ class PostsController extends Controller
         $post->description = request('description');
         //$post->image_path = request('image_path');
         $post->user_id = request('user_id');//$post->user_id = auth()->user()->id; // moved to view
-
         $newImageName = request('user_id').'-'.time().'-'.request('image_path')->getClientOriginalName();//.'.'.request('image_path')->guessExtension();
         $post->image_path = $newImageName;
-        $request->image_path->move(public_path('images_path'), $newImageName);
-        //dd($test);
-        // dd(($post->image_path));
         $post->save();
-       
+
+        $request->image_path->move(public_path('images_path'), $newImageName);
         return redirect()->action([HomeController::class, 'index'])->with('status', 'Your post  "'.($post->title).'" created successfully !');
 ;
     }
@@ -110,12 +107,7 @@ $files = File::allFiles(public_path('images_path/'.$post_id));
 
 //dd($files->filename);
 /*
-foreach($files as $file)
-{
- //$file_name = $file()->filename;
-
-dd($file->getFilename());
-}*/
+*/
 //dd($files);
         return view('posts.show',compact('post','files','filename'));
     }

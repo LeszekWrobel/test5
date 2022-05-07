@@ -8,11 +8,9 @@
                 <div class="card-header"><h1>Dodaj ogłoszenie</h1></div>
                
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+
+                @include('inc/messages')
+                   
                         <form class="row m-3" method="POST" action="/posts" enctype="multipart/form-data">
                         {{csrf_field()}}
                                               
