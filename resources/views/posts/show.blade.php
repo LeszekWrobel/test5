@@ -42,9 +42,9 @@
                                 <img src="{{asset('images_path/'.$post->image_path)}}" class="img-fluid" alt="...">
                                 
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-11 m-5">
                                 <div class="card-body">
-                                    <h3 class="card-title my-4">{{$post->title}}</h3>
+                                    <h3 class="card-title">{{$post->title}}</h3>
                                 
                                     <p class="card-text">{{$post->description}}</p>
                                     <div class="card-body">

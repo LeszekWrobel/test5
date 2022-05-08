@@ -129,21 +129,23 @@ class PostsController extends Controller
        $attributes =  request()->validate([
         'title' => ['required', 'min:3'],
         'description' => ['required', 'min:3'],
-        'image_path' => ['required','max:5048']
+ //       'image_path' => ['required','max:5048']
        ]);
 
         $user_id = auth()->user()->id;
-        $newImageName = $user_id.'-'.time().'-'.request('image_path')->getClientOriginalName();//.'.'.request('image_path')->guessExtension();
-        $post->image_path = $newImageName;
-        $post->update(request(['title','description','image_path']));
+       
+        //  $post->update(request(['title','description','image_path']));
        if ($request->hasFile('image_path'))
        {
+            $newImageName = $user_id.'-'.time().'-'.request('image_path')->getClientOriginalName();//.'.'.request('image_path')->guessExtension();
+            $post->image_path = $newImageName;
             $destinationPath = public_path('images_path');//'path/th/save/file/';
             $files = $request->file('image_path'); // will get all files
-             //  foreach ($files as $file) {//this statement will loop through all files.
-             //$file_name = $files->getClientOriginalName(); //Get file original name
+                //  foreach ($files as $file) {//this statement will loop through all files.
+                //$file_name = $files->getClientOriginalName(); //Get file original name
             $files->move($destinationPath , $newImageName); // move files to destination folder
        }
+       $post->update(request(['title','description','image_path']));
        return redirect()->action([HomeController::class, 'index'])->with('status', 'Post "'.($post->title).'" updated successfully !');
     }
 
@@ -155,7 +157,7 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        //unlink('images_path/'.$post->id.);//rmdir();
+       
         $dir = 'images_path/'.$post->id;
         function delTree($dir)
         {
@@ -167,6 +169,9 @@ class PostsController extends Controller
             return rmdir($dir);
         }
         delTree($dir);
+
+         unlink('images_path/'.$post->image_path);//rmdir();
+
         $post->delete();
         return redirect()->action([HomeController::class, 'index'])->with('status','Post "'.($post->title).'" deleted successfully !');
     }
