@@ -43,22 +43,7 @@ class ImageUploadController extends Controller
          $attributes =  request()->validate([
             'image_path' => ['required','max:5048']
         ]);
-/*,'mimes:jpg,png,jpeg'
-        $images = new Images::
-        if ($request->image_name)
-        $newImageName = request('user_id').'-'.time().'-'.request('image_path')->getClientOriginalName();
-        $post->image_path = $newImageName;
-        $request->image_path->move(public_path('images_path'), $newImageName);
-        // $post->save();
 
-        public function schooldetailviewid(Request $request)
-{ 
-   
-    $school_id = $request->get('id');
-
-    return view("viewdeatil/school_id=$school_id", compact('school_id'));
-}
-*/     
         $data = [];
         if ($request->hasFile('image_path'))
         {
@@ -74,11 +59,9 @@ class ImageUploadController extends Controller
               $data[] = $file_name;
              ;
           }
-      }
-         // dd($post);
-         /*
-*/      $post = $request->get('post_id');
-         return redirect()->route('posts.show', ['post' => $post])->with('success', 'Images added successfully !');
+        }
+        $post = $request->get('post_id');
+        return redirect()->route('posts.show', ['post' => $post])->with('success', 'Images added successfully !');
          
     }
 
@@ -114,13 +97,10 @@ class ImageUploadController extends Controller
     public function update(Request $request, $id)
     {
        $file_name = $request->get('file_name');
-        //dd('destroy');
-        unlink('images_path/'.$id.'/'.$file_name);
-       
-         //return back()->with('status', 'Your immage has been deleted successfully !');
+       unlink('images_path/'.$id.'/'.$file_name);
+        //return back()->with('status', 'Your immage has been deleted successfully !');
         // return redirect()->action([PostsController::class, 'show'])->with('status','Post "'.($post->title).'" deleted successfully !');
-        //$post = $request->get('post_id');
-         return redirect()->route('posts.show', ['post' => $id])->with('success', 'Images deleted successfully !');
+       return redirect()->route('posts.show', ['post' => $id])->with('success', 'Image '.$file_name.' deleted successfully !');
     }
 
     /**

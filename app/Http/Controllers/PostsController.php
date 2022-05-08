@@ -56,20 +56,16 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-       
-           $attributes =  request()->validate([
-            'title' => ['required', 'min:3'],
-            'description' => ['required', 'min:3'],
-           
-             'image_path' => ['required','mimes:jpg,png,jpeg','max:5048']
-           // 'image' => 'image|nullable|max:1999'
+        $attributes =  request()->validate([
+        'title' => ['required', 'min:3'],
+        'description' => ['required', 'min:3'],
+        'image_path' => ['required','mimes:jpg,png,jpeg','max:5048']
+        // 'image' => 'image|nullable|max:1999'
         ]);
-       
 
         $post = new Post;
         $post->title = request('title');
         $post->description = request('description');
-        //$post->image_path = request('image_path');
         $post->user_id = request('user_id');//$post->user_id = auth()->user()->id; // moved to view
         $newImageName = request('user_id').'-'.time().'-'.request('image_path')->getClientOriginalName();//.'.'.request('image_path')->guessExtension();
         $post->image_path = $newImageName;
@@ -88,18 +84,18 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
-    $post_id = $post->id;
-
-    //$files = File::files(public_path('images_path/'.$post_id));
-
-    // If you would like to retrieve a list of 
-    // all files within a given directory including all sub-directories
-    $filename = public_path('images_path/'.$post_id);
-    if (is_dir($filename)) { 
-    $files = File::allFiles(public_path('images_path/'.$post_id));
-    }else{ $files = null;}
-
-    return view('posts.show',compact('post','files','filename'));
+        $post_id = $post->id;
+        //$files = File::files(public_path('images_path/'.$post_id));
+        // If you would like to retrieve a list of 
+        // all files within a given directory including all sub-directories
+        $filename = public_path('images_path/'.$post_id);
+        if (is_dir($filename))
+        {
+            $files = File::allFiles(public_path('images_path/'.$post_id));
+        }else{
+            $files = null;
+        }
+        return view('posts.show',compact('post','files','filename'));
     }
 
     /**
@@ -111,7 +107,7 @@ class PostsController extends Controller
     public function edit(Post $post)
     {
        // $post = new Post::all();
-       return view('posts/edit', compact('post'));
+        return view('posts/edit', compact('post'));
     }
 
     /**
@@ -122,47 +118,33 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
-    {/*
+        /*
         $post = Post::find();
         $post->title = request('title');
         $post->description = request('description');
         $post->image = request('image');
         $post->user_id = auth()->user()->id;;
-        $post->save();
-*/
+        $post->save();*/
+    {  
        $attributes =  request()->validate([
-            'title' => ['required', 'min:3'],
-            'description' => ['required', 'min:3'],
-            'image_path' => ['required','max:5048']
-             ]);
-  
-       $newImageName = auth()->user()->id.'-'.time().'-'.request('image_path');//.'.'.request('image_path')->guessExtension();
-       $post->image_path = $newImageName;
-       $post->update(request(['title','description','image_path']));
-    //    $request->image_path->move(public_path('images_path'), $post->image_path);
-    // $request->image_path->move(public_path('images_path'), $newImageName);
-    //dd(($request->hasFile('image_path')));
-    if ($request->hasFile('image_path')) {
-    $destinationPath = public_path('images_path');//'path/th/save/file/';
-    $files = $request->file('image_path'); // will get all files
-    // dd($files->getClientOriginalName());
-  //  foreach ($files as $file) {//this statement will loop through all files.
-        $file_name = $files->getClientOriginalName(); //Get file original name
-        $files->move($destinationPath , $file_name); // move files to destination folder
-    }
+        'title' => ['required', 'min:3'],
+        'description' => ['required', 'min:3'],
+        'image_path' => ['required','max:5048']
+       ]);
 
-  /*
-      $destinationPath = public_path('images_path');
-              $user_id = auth()->user()->id;
-              $file_name = $user_id.'-'.time().'-'.$file->getClientOriginalName();
-              $file->move($destinationPath, $file_name);
-*/
-    //dd($request->image_path);
-     // $request->image_path->move(public_path('images_path'),$newImageName);
-      // return redirect('/posts')->with('status', 'Post updated!'); // works for status
-      //  return redirect()->route('posts.index')->withErrors(['Your updated successfully']); // work for errors
-      return redirect()->action([HomeController::class, 'index'])->with('status', 'Post "'.($post->title).'" updated successfully !');
-  
+        $user_id = auth()->user()->id;
+        $newImageName = $user_id.'-'.time().'-'.request('image_path')->getClientOriginalName();//.'.'.request('image_path')->guessExtension();
+        $post->image_path = $newImageName;
+        $post->update(request(['title','description','image_path']));
+       if ($request->hasFile('image_path'))
+       {
+            $destinationPath = public_path('images_path');//'path/th/save/file/';
+            $files = $request->file('image_path'); // will get all files
+             //  foreach ($files as $file) {//this statement will loop through all files.
+             //$file_name = $files->getClientOriginalName(); //Get file original name
+            $files->move($destinationPath , $newImageName); // move files to destination folder
+       }
+       return redirect()->action([HomeController::class, 'index'])->with('status', 'Post "'.($post->title).'" updated successfully !');
     }
 
     /**
@@ -173,6 +155,18 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
+        //unlink('images_path/'.$post->id.);//rmdir();
+        $dir = 'images_path/'.$post->id;
+        function delTree($dir)
+        {
+           $files = array_diff(scandir($dir), array('.','..'));
+           foreach ($files as $file)
+           {
+            (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+           }
+            return rmdir($dir);
+        }
+        delTree($dir);
         $post->delete();
         return redirect()->action([HomeController::class, 'index'])->with('status','Post "'.($post->title).'" deleted successfully !');
     }

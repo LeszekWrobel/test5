@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h1>Edytuj ogłoszenie</h1>
+                    <h1>Edytujesz ogłoszenie nr {{$post->id}}</h1>
                     <a class="btn btn-outline-dark" href="{{ URL::previous() }}" >return</a>
                 </div>
                 <div class="card-body">
