@@ -61,7 +61,7 @@ class PostsController extends Controller
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
            
-            'image_path' => ['required','mimes:jpg,png,jpeg','max:5048']
+             'image_path' => ['required','mimes:jpg,png,jpeg','max:5048']
            // 'image' => 'image|nullable|max:1999'
         ]);
        
@@ -88,28 +88,18 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
-      //  use File;
+    $post_id = $post->id;
 
-//$files = File::files(public_path()); //
-$post_id = $post->id;
+    //$files = File::files(public_path('images_path/'.$post_id));
 
-//$files = File::files(public_path('images_path/'.$post_id));
+    // If you would like to retrieve a list of 
+    // all files within a given directory including all sub-directories
+    $filename = public_path('images_path/'.$post_id);
+    if (is_dir($filename)) { 
+    $files = File::allFiles(public_path('images_path/'.$post_id));
+    }else{ $files = null;}
 
-// If you would like to retrieve a list of 
-// all files within a given directory including all sub-directories
-$filename = public_path('images_path/'.$post_id);
-if (is_dir($filename)) { 
-$files = File::allFiles(public_path('images_path/'.$post_id));
-}else{ $files = null;}
-//if (file_exists($files)) { dd('jest folder');} else {dd('brak folderu');}
-
-//$files = File::findOrFail(Files(public_path('images_path/'.$post_id)));
-
-//dd($files->filename);
-/*
-*/
-//dd($files);
-        return view('posts.show',compact('post','files','filename'));
+    return view('posts.show',compact('post','files','filename'));
     }
 
     /**
@@ -143,10 +133,32 @@ $files = File::allFiles(public_path('images_path/'.$post_id));
        $attributes =  request()->validate([
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
-           
-         //   'image_path' => ['required','max:1999']
+            'image_path' => ['required','max:5048']
              ]);
-     $post->update(request(['title','description','image_path']));
+  
+       $newImageName = auth()->user()->id.'-'.time().'-'.request('image_path');//.'.'.request('image_path')->guessExtension();
+       $post->image_path = $newImageName;
+       $post->update(request(['title','description','image_path']));
+    //    $request->image_path->move(public_path('images_path'), $post->image_path);
+    // $request->image_path->move(public_path('images_path'), $newImageName);
+    //dd(($request->hasFile('image_path')));
+    if ($request->hasFile('image_path')) {
+    $destinationPath = public_path('images_path');//'path/th/save/file/';
+    $files = $request->file('image_path'); // will get all files
+    // dd($files->getClientOriginalName());
+  //  foreach ($files as $file) {//this statement will loop through all files.
+        $file_name = $files->getClientOriginalName(); //Get file original name
+        $files->move($destinationPath , $file_name); // move files to destination folder
+    }
+
+  /*
+      $destinationPath = public_path('images_path');
+              $user_id = auth()->user()->id;
+              $file_name = $user_id.'-'.time().'-'.$file->getClientOriginalName();
+              $file->move($destinationPath, $file_name);
+*/
+    //dd($request->image_path);
+     // $request->image_path->move(public_path('images_path'),$newImageName);
       // return redirect('/posts')->with('status', 'Post updated!'); // works for status
       //  return redirect()->route('posts.index')->withErrors(['Your updated successfully']); // work for errors
       return redirect()->action([HomeController::class, 'index'])->with('status', 'Post "'.($post->title).'" updated successfully !');

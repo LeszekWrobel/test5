@@ -10,12 +10,12 @@
                     <a class="btn btn-outline-dark" href="{{ URL::previous() }}" >return</a>
                 </div>
                 <div class="card-body">
-                    @if (session('status'))
+           <!--         @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif
-                        <form class="row m-3" method="POST" action="/posts/{{$post->id}}" enctype="multipart-data">
+                    @endif -->
+                        <form class="row m-3" method="POST" action="/posts/{{$post->id}}" enctype="multipart/form-data">
                         @method('PATCH')
                         @csrf
                                               
@@ -45,11 +45,21 @@
                                     </span>
                                 @endif
                             </div>
-                            
-                            <div class="form-group row g-3">
-                                <label form="image">Dodaj zdjęcie</label>
-                                <input type="file" id="image" name="image">
+
+                             <div class="form-group row g-3">
+                                <label form="image_path">Dodaj zdjęcie</label>
+                                <input id="image_path" type="file"
+                                class="form-control{{ $errors->has('image_path') ? ' is-invalid' : ''}}"
+                                name="image_path"
+                                value="{{$post->image_path}}">
+
+                                @if ($errors->has('image_path'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('image_path') }}</strong>
+                                    </span>
+                                @endif
                             </div>
+                            
                            
                             <div class="g-3">
                                 <button class="btn btn-primary" type="submmit">Zapisz zmiany</button>

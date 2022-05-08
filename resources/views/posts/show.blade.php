@@ -40,28 +40,7 @@
                    
                             <div class="col-md-12 ">
                                 <img src="{{asset('images_path/'.$post->image_path)}}" class="img-fluid" alt="...">
-                                @if (is_dir($filename)) 
-                                    @foreach($files as $file)
-                           
-                                        <img src="{{asset('images_path/'.$post->id.'/'.$file->getFilename())}}" class="img-fluid mt-3" alt="">
-                                        <div class="col-2 my-2 text-center ">
-
-                                        @if(!Auth::guest())
-                                            @if(Auth::user()->id == $post->user_id)
-                                                <form method="POST" action="{{route('image.update',$post->id)}}?file_name={{$file->getFilename()}}">
-                                                    @method('PATCH')
-                                                    @csrf
-                                                    <button type="submit"
-                                                            onclick="return confirm('Chcesz usunąć post ?')"
-                                                            class="btn btn-outline-danger">Delete image
-                                                    </button>
-                                                </form>
-                                            @endif
-                                        @endif
-                                        </div>
-                          
-                                    @endforeach
-                                @endif
+                                
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
@@ -72,11 +51,35 @@
                                         <p class="card-text"><small class="text-muted"> Ostatnia aktualizacja : {{$post->created_at}} <br/>
                                         Dodano : {{$post->updated_at}}</small></p>
                                        
-                                        <a href="{{ route('index') }}" class="btn btn-outline-dark btn-sm shadow p-1 mb-5">Wróć do       ogłoszeń
+                                        <a href="{{ route('index') }}" class="btn btn-outline-dark btn-sm shadow p-1 mb-1">Wróć do       ogłoszeń
                                         </a>
                                     </div>
                                 </div>
                             </div>
+
+                            @if (is_dir($filename)) 
+                                @foreach($files as $file)
+                           
+                                    <img src="{{asset('images_path/'.$post->id.'/'.$file->getFilename())}}" class="img-fluid mt-3" alt="">
+                                    <div class="col-2 my-2 text-center ">
+
+                                    @if(!Auth::guest())
+                                        @if(Auth::user()->id == $post->user_id)
+                                            <form method="POST" action="{{route('image.update',$post->id)}}?file_name={{$file->getFilename()}}">
+                                                @method('PATCH')
+                                                @csrf
+                                                <button type="submit"
+                                                        onclick="return confirm('Chcesz usunąć post ?')"
+                                                        class="btn btn-outline-danger">Delete image
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @endif
+                                    </div>
+                          
+                                @endforeach
+                            @endif
+
                         </div>
             </div>
         </div>

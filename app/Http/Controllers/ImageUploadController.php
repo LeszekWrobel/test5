@@ -41,7 +41,7 @@ class ImageUploadController extends Controller
     public function store(Request $request)
     {
          $attributes =  request()->validate([
-            'image_path' => ['required']
+            'image_path' => ['required','max:5048']
         ]);
 /*,'mimes:jpg,png,jpeg'
         $images = new Images::
@@ -78,7 +78,7 @@ class ImageUploadController extends Controller
          // dd($post);
          /*
 */      $post = $request->get('post_id');
-         return redirect()->route('posts.show', ['post' => $post])->with('status', 'Images added successfully !');
+         return redirect()->route('posts.show', ['post' => $post])->with('success', 'Images added successfully !');
          
     }
 
@@ -117,8 +117,10 @@ class ImageUploadController extends Controller
         //dd('destroy');
         unlink('images_path/'.$id.'/'.$file_name);
        
-         return back()->with('status', 'Your immage has been  deleted successfully !');
-        //  return redirect()->action([HomeController::class, 'index'])->with('status','Post "'.($post->title).'" deleted successfully !');
+         //return back()->with('status', 'Your immage has been deleted successfully !');
+        // return redirect()->action([PostsController::class, 'show'])->with('status','Post "'.($post->title).'" deleted successfully !');
+        //$post = $request->get('post_id');
+         return redirect()->route('posts.show', ['post' => $id])->with('success', 'Images deleted successfully !');
     }
 
     /**
