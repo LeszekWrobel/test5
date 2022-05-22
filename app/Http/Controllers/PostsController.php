@@ -161,12 +161,15 @@ class PostsController extends Controller
         $dir = 'images_path/'.$post->id;
         function delTree($dir)
         {
-           $files = array_diff(scandir($dir), array('.','..'));
-           foreach ($files as $file)
-           {
-            (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
-           }
-            return rmdir($dir);
+            if (!asset($dir))
+            {
+               $files = array_diff(scandir($dir), array('.','..'));
+               foreach ($files as $file)
+               {
+                (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+               }
+                return rmdir($dir);
+            }
         }
         delTree($dir);
 
